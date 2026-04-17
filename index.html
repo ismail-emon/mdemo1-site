@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Md. Ismail Siddiqi Emon</title>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Source+Sans+3:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --accent: #8b0000;
+    --text: #1a1a1a;
+    --muted: #555;
+    --light: #888;
+    --border: #ddd;
+    --bg: #fff;
+    --sidebar-w: 200px;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Source Sans 3', sans-serif;
+    font-weight: 300;
+    font-size: 15px;
+    line-height: 1.6;
+  }
+
+  .page {
+    display: flex;
+    min-height: 100vh;
+  }
+
+  /* SIDEBAR */
+  .sidebar {
+    width: var(--sidebar-w);
+    flex-shrink: 0;
+    position: fixed;
+    top: 0; left: 0; bottom: 0;
+    border-right: 1px solid var(--border);
+    padding: 2rem 0;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    background: #fafafa;
+  }
+
+  .sidebar-profile {
+    padding: 0 1.25rem 1.5rem;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 1.25rem;
+  }
+
+  .profile-img {
+    width: 100%;
+    aspect-ratio: 1;
+    object-fit: cover;
+    border-radius: 3px;
+    display: block;
+    margin-bottom: 0.75rem;
+  }
+
+  .profile-img-placeholder {
+    width: 100%;
+    aspect-ratio: 1;
+    border-radius: 3px;
+    background: #e8e8e8;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 0.75rem;
+    color: #aaa;
+    font-size: 11px;
+    font-style: italic;
+    text-align: center;
+    padding: 8px;
+    line-height: 1.4;
+  }
+
+  .sidebar-name {
+    font-family: 'EB Garamond', serif;
+    font-size: 14px;
+    color: var(--text);
+    line-height: 1.3;
+    margin-bottom: 3px;
+  }
+
+  .sidebar-role {
+    font-size: 11px;
+    color: var(--muted);
+    line-height: 1.4;
+  }
+
+  nav ul { list-style: none; padding: 0 0.5rem; }
+
+  nav ul li a {
+    display: block;
+    padding: 0.35rem 0.75rem;
+    font-size: 13px;
+    color: var(--muted);
+    text-decoration: none;
+    border-radius: 3px;
+    transition: background 0.15s, color 0.15s;
+    border-left: 2px solid transparent;
+  }
+
+  nav ul li a:hover,
+  nav ul li a.active {
+    color: var(--accent);
+    background: #f0f0f0;
+    border-left-color: var(--accent);
+  }
+
+  .sidebar-contact {
+    margin-top: auto;
+    padding: 1.25rem 1.25rem 0;
+    border-top: 1px solid var(--border);
+    font-size: 11px;
+    color: var(--light);
+    line-height: 1.9;
+  }
+
+  .sidebar-contact a { color: var(--accent); text-decoration: none; word-break: break-all; }
+
+  /* MAIN */
+  .main {
+    margin-left: var(--sidebar-w);
+    flex: 1;
+    padding: 3.5rem 4rem;
+    max-width: 900px;
+  }
+
+  /* PAGE HEADER */
+  .page-header {
+    padding-bottom: 1.75rem;
+    margin-bottom: 2.5rem;
+    border-bottom: 2px solid var(--text);
+  }
+
+  .page-header h1 {
+    font-family: 'EB Garamond', serif;
+    font-size: 36px;
+    font-weight: 400;
+    color: var(--text);
+    margin-bottom: 0.2rem;
+    line-height: 1.1;
+  }
+
+  .page-header .subtitle {
+    font-size: 14px;
+    color: var(--muted);
+    margin-bottom: 0.75rem;
+  }
+
+  .contact-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem 1.5rem;
+    font-size: 13px;
+    color: var(--muted);
+  }
+
+  .contact-row a { color: var(--accent); text-decoration: none; }
+  .contact-row a:hover { text-decoration: underline; }
+
+  /* SECTIONS */
+  section {
+    margin-bottom: 2.75rem;
+    scroll-margin-top: 1.5rem;
+  }
+
+  section h2 {
+    font-family: 'EB Garamond', serif;
+    font-size: 18px;
+    font-weight: 400;
+    color: var(--text);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 0.3rem;
+    margin-bottom: 1.25rem;
+  }
+
+  /* RESEARCH INTERESTS */
+  .interests p { font-size: 14px; margin-bottom: 0.4rem; }
+  .interests strong { font-weight: 600; margin-right: 0.3rem; }
+
+  /* EDUCATION / EXPERIENCE */
+  .cv-item {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 0.5rem 1rem;
+    margin-bottom: 1.25rem;
+    align-items: start;
+  }
+
+  .cv-title { font-weight: 600; font-size: 14px; color: var(--text); }
+  .cv-org { font-size: 14px; color: var(--muted); }
+  .cv-detail { font-size: 13px; color: var(--light); font-style: italic; }
+  .cv-date { font-size: 13px; color: var(--muted); white-space: nowrap; text-align: right; padding-top: 1px; }
+
+  /* PUBLICATIONS */
+  .pub-item {
+    display: grid;
+    grid-template-columns: 22px 1fr;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+    font-size: 14px;
+    line-height: 1.55;
+  }
+
+  .pub-num { color: var(--light); font-size: 13px; padding-top: 1px; }
+  .pub-title { color: var(--text); }
+  .pub-authors { color: var(--muted); font-size: 13px; }
+  .pub-authors .me { font-weight: 600; color: var(--text); text-decoration: underline; }
+  .pub-venue { color: var(--light); font-size: 13px; font-style: italic; }
+
+  /* AWARDS */
+  .list-item {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 0.5rem;
+    margin-bottom: 0.55rem;
+    font-size: 14px;
+    align-items: baseline;
+  }
+
+  .list-name { color: var(--text); }
+  .list-date { font-size: 13px; color: var(--muted); white-space: nowrap; }
+
+  /* SKILLS */
+  .skill-row {
+    display: grid;
+    grid-template-columns: 145px 1fr;
+    gap: 0.4rem 0.75rem;
+    margin-bottom: 0.45rem;
+    font-size: 14px;
+    align-items: baseline;
+  }
+
+  .skill-cat { color: var(--muted); font-weight: 600; font-size: 13px; }
+  .skill-vals { color: var(--text); }
+
+  /* REFEREES */
+  .ref-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+  }
+
+  .ref-item { font-size: 14px; line-height: 1.75; }
+  .ref-name { font-weight: 600; color: var(--text); margin-bottom: 2px; }
+  .ref-role { color: var(--muted); font-size: 13px; line-height: 1.5; margin-bottom: 4px; }
+  .ref-contact a { color: var(--accent); text-decoration: none; font-size: 13px; display: block; }
+  .ref-contact a:hover { text-decoration: underline; }
+
+  footer {
+    margin-top: 3rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--border);
+    font-size: 12px;
+    color: var(--light);
+  }
+
+  @media (max-width: 700px) {
+    .sidebar { display: none; }
+    .main { margin-left: 0; padding: 2rem 1.5rem; }
+    .ref-grid { grid-template-columns: 1fr; }
+    .skill-row { grid-template-columns: 1fr; }
+    .cv-item, .list-item { grid-template-columns: 1fr; }
+    .cv-date, .list-date { text-align: left; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <aside class="sidebar">
+    <div class="sidebar-profile">
+      <!--
+        TO ADD YOUR PHOTO:
+        1. Save your photo as "photo.jpg" in the same folder as this file
+        2. Replace the div below with:
+           <img src="photo.jpg" alt="Ismail Emon" class="profile-img">
+      -->
+           <img src="https://i1.rgstatic.net/ii/profile.image/11431281537150779-1752143842874_Q512/Md-Ismail-Emon-2.jpg" alt="Ismail Emon" class="profile-img">
+      <!-- <div class="profile-img-placeholder">Place photo.jpg in same folder &amp; update HTML</div> -->
+      <div class="sidebar-name">Md. Ismail Siddiqi Emon</div>
+      <div class="sidebar-role">PhD Student @ MSU · ML Associate @ NIST</div>
+    </div>
+
+    <nav>
+      <ul>
+        <li><a href="#interests" class="active">Research Interests</a></li>
+        <li><a href="#education">Education</a></li>
+        <li><a href="#experience">Experience</a></li>
+        <li><a href="#publications">Publications</a></li>
+        <li><a href="#talks">Invited Talks</a></li>
+        <li><a href="#awards">Awards</a></li>
+        <li><a href="#grants">Travel Grants</a></li>
+        <li><a href="#teaching">Teaching</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#referees">Referees</a></li>
+      </ul>
+    </nav>
+
+    <div class="sidebar-contact">
+      <div><a href="mailto:emonsahriar0@gmail.com">emonsahriar0@gmail.com</a></div>
+      <div>.</div>
+      <div><a href="https://scholar.google.com" target="_blank">Google Scholar ↗</a></div>
+    </div>
+  </aside>
+
+  <main class="main">
+
+    <div class="page-header">
+      <h1>Md. Ismail Siddiqi Emon</h1>
+      <div class="subtitle">PhD Student, Morgan State University &nbsp;·&nbsp; Machine Learning Associate, EL-73-733, NIST</div>
+      <div class="contact-row">
+        <span><a href="mailto:emonsahriar0@gmail.com">emonsahriar0@gmail.com</a></span>
+        <span>.</span>
+        <span><a href="https://scholar.google.com" target="_blank">Google Scholar</a></span>
+        <span>Citations: 145</span>
+      </div>
+    </div>
+
+    <section id="interests">
+      <h2>Research Interests</h2>
+      <div class="interests">
+        <p><strong>Fields:</strong> Data Science, Computer Vision, Machine Learning, Natural Language Processing</p>
+        <p><strong>Topics:</strong> Generative Models, Medical Imaging, Integrated Systems, Large Language Models, Vision Transformer, Transfer Learning, Variational Auto Encoder</p>
+      </div>
+    </section>
+
+    <section id="education">
+      <h2>Education</h2>
+
+      <div class="cv-item">
+        <div>
+          <div class="cv-title">PhD in Secure Embedded Systems</div>
+          <div class="cv-org">Morgan State University</div>
+          <div class="cv-detail">Advisors: Dr. Wai Cheong Tam &amp; Dr. Fahmi Khalifa</div>
+        </div>
+        <div class="cv-date">Fall 2025 – Present</div>
+      </div>
+
+      <div class="cv-item">
+        <div>
+          <div class="cv-title">MS in Advanced Computing &nbsp;<span style="font-weight:300;font-size:13px;">(CGPA: 4.0 / 4.0)</span></div>
+          <div class="cv-org">Morgan State University</div>
+          <div class="cv-detail">Advisor: Dr. Md Rahaman</div>
+        </div>
+        <div class="cv-date">Jan 2023 – Dec 2024</div>
+      </div>
+    </section>
+
+    <section id="experience">
+      <h2>Experience</h2>
+
+      <div class="cv-item">
+        <div>
+          <div class="cv-title">Machine Learning Associate</div>
+          <div class="cv-org">National Institute of Standards &amp; Technology (NIST)</div>
+          <div class="cv-detail">Lab: EL-73-733, Fire Safety Group &nbsp;·&nbsp; Supervisor: Dr. Wai Cheong Tam</div>
+        </div>
+        <div class="cv-date">Sep 2024 – Present</div>
+      </div>
+
+      <div class="cv-item">
+        <div>
+          <div class="cv-title">Graduate Research Assistant</div>
+          <div class="cv-org">Computer Vision and Informatics Lab, Morgan State University</div>
+          <div class="cv-detail">Supervisor: Dr. Md Rahman</div>
+        </div>
+        <div class="cv-date">Jan 2023 – Aug 2024</div>
+      </div>
+
+      <div class="cv-item">
+        <div>
+          <div class="cv-title">Graduate Teaching Assistant</div>
+          <div class="cv-org">Dept. of Computer Science, SCMNS, Morgan State University</div>
+          <div class="cv-detail">COSC 502, COSC 112, COSC 385</div>
+        </div>
+        <div class="cv-date">Jan 2023 – May 2023</div>
+      </div>
+    </section>
+
+    <section id="publications">
+      <h2>Publications <span style="font-family:'Source Sans 3',sans-serif;font-size:13px;font-weight:300;letter-spacing:0;text-transform:none;color:#888;">(16 total · 145 citations)</span></h2>
+
+      <div class="pub-item">
+        <div class="pub-num">1.</div>
+        <div>
+          <div class="pub-title">"A novel vision transformer-based approach to detect generative model fingerprint."</div>
+          <div class="pub-authors"><span class="me">Md. Ismail Siddiqi Emon</span>, M. Hoque, Md R. Hasan, F. Khalifa, Md. Rahman.</div>
+          <div class="pub-venue">SPIE Medical Imaging 2025, San Diego, California.</div>
+        </div>
+      </div>
+
+      <div class="pub-item">
+        <div class="pub-num">2.</div>
+        <div>
+          <div class="pub-title">"On the Use of Machine Learning for Detection of Lithium-Ion Battery Early-Stage Thermal Runaway."</div>
+          <div class="pub-authors">Wai Cheong Tam†, <span class="me">Md Ismail Siddiqi Emon†</span>, Jian Chen, Hongqiang Fang, Jun Deng, Anthony Putorti Jr.</div>
+          <div class="pub-venue">4th International Symposium on Lithium Battery Fire Safety (ISLBFS) 2025, Hong Kong.</div>
+        </div>
+      </div>
+
+      <div class="pub-item">
+        <div class="pub-num">3.</div>
+        <div>
+          <div class="pub-title">"Optimizing Breast Cancer Detection with Transformer Models and Canonical Correlation Analysis."</div>
+          <div class="pub-authors">J. Aina, <span class="me">Md Ismail S Emon</span>, Olu. Akinniyi, Oumou Mbaye, Ayah Rahman, M. Mulla, F. Khalifa, Md. Rahman.</div>
+          <div class="pub-venue">ICMI-2025, Central Michigan University, USA.</div>
+        </div>
+      </div>
+
+      <div class="pub-item">
+        <div class="pub-num">4.</div>
+        <div>
+          <div class="pub-title">"Comparative Analysis of Fine-tuned Multimodal Models in Radiology Image Captioning."</div>
+          <div class="pub-authors">M. Hoque, Md R. Hasan, <span class="me">Md. Ismail S Emon</span>, F. Khalifa, Md. Rahman.</div>
+          <div class="pub-venue">ICMI-2025, Central Michigan University, USA.</div>
+        </div>
+      </div>
+
+      <div class="pub-item">
+        <div class="pub-num">5.</div>
+        <div>
+          <div class="pub-title">"Fingerprint Identification of Generative Models Using a MultiFormer Ensemble Approach."</div>
+          <div class="pub-authors"><span class="me">Md. Ismail Siddiqi Emon</span>, M. Hoque, Md R. Hasan, F. Khalifa, Md. Rahman.</div>
+          <div class="pub-venue">CLEF 2024 (15th Conference), CEUR Workshop Proceedings, Grenoble Alpes, France.</div>
+        </div>
+      </div>
+
+      <div class="pub-item">
+        <div class="pub-num">6.</div>
+        <div>
+          <div class="pub-title">"Medical Image Interpretation with Large Multimodal Models."</div>
+          <div class="pub-authors">M. Hoque, Md R. Hasan, <span class="me">Md. Ismail Siddiqi Emon</span>, F. Khalifa, Md. Rahman.</div>
+          <div class="pub-venue">CLEF 2024, CEUR Workshop Proceedings, Grenoble Alpes, France.</div>
+        </div>
+      </div>
+
+      <div class="pub-item">
+        <div class="pub-num">7.</div>
+        <div>
+          <div class="pub-title">"Media interestingness prediction in ImageCLEFfusion 2023 with dense architecture-based ensemble &amp; scaled gradient boosting regressor model."</div>
+          <div class="pub-authors"><span class="me">Md Ismail Siddiqi Emon</span>, M. Rahman.</div>
+          <div class="pub-venue">Experimental IR Meets Multilinguality, Multimodality, and Interaction, CEUR Workshop Proceedings, Thessaloniki, Greece. 2023.</div>
+        </div>
+      </div>
+
+      <div class="pub-item">
+        <div class="pub-num">8.</div>
+        <div>
+          <div class="pub-title">"Sentiment analysis of Bengali online reviews written with English letter using machine learning approaches."</div>
+          <div class="pub-authors"><span class="me">Md Ismail Siddiqi Emon</span>, Sabiha Sunjida Ahmed, Sharmin Akter Milu, S. S. Mahtab.</div>
+          <div class="pub-venue">6th International Conference on Networking, Systems and Security (NsysS 2019), ACM, pp. 109–115.</div>
+        </div>
+      </div>
+
+      <div class="pub-item">
+        <div class="pub-num">9.</div>
+        <div>
+          <div class="pub-title">"Opinion mining of Bengali review written with English character using machine learning approaches."</div>
+          <div class="pub-authors">Sabiha Sunjida Ahmed, Sharmin Akter Milu, <span class="me">Md Ismail Siddiqi Emon</span>, et al.</div>
+          <div class="pub-venue">ICCCES 2019, pp. 45–57. Springer Singapore, 2020.</div>
+        </div>
+      </div>
+
+      <div class="pub-item">
+        <div class="pub-num">10.</div>
+        <div>
+          <div class="pub-title">"Navigation and Tracking of AGV in warehouse via Wireless Sensor Network."</div>
+          <div class="pub-authors">Rocky Chakma, S. S. Mahtab, Sharmin Akter Milu, <span class="me">Md Ismail Siddiqi Emon</span>, et al.</div>
+          <div class="pub-venue">IEEE 3rd International Electrical and Energy Conference (CIEEC), pp. 1686–1690. 2019.</div>
+        </div>
+      </div>
+
+      <div class="pub-item">
+        <div class="pub-num">11.</div>
+        <div>
+          <div class="pub-title">"Sentiment analysis of Bengali reviews for data and knowledge engineering: a Bengali language processing approach."</div>
+          <div class="pub-authors">Sharmin Akter Milu, <span class="me">Md Ismail Siddiqi Emon</span>, Sabiha Sunjida Ahmed, et al.</div>
+          <div class="pub-venue">ICCCES 2019, pp. 81–91. Springer Singapore, 2020.</div>
+        </div>
+      </div>
+
+      <div class="pub-item">
+        <div class="pub-num">12.</div>
+        <div>
+          <div class="pub-title">"An Automated Bengali Text Summarization Technique Using Lexicon-Based Approach."</div>
+          <div class="pub-authors">Busrat Jahan, Sheikh Shahparan Mahtab, <span class="me">Md Ismail Siddiqi Emon</span>, et al.</div>
+          <div class="pub-venue">Innovations in Computer Science and Engineering: 8th ICICSE, pp. 363–373. Springer Singapore, 2021.</div>
+        </div>
+      </div>
+
+      <div class="pub-item">
+        <div class="pub-num">13.</div>
+        <div>
+          <div class="pub-title">"A Pronoun Replacement-Based Special Tagging System for Bengali Language Processing (BLP)."</div>
+          <div class="pub-authors">Busrat Jahan, <span class="me">Md Ismail Siddiqi Emon</span>, Sharmin Akter Milu, et al.</div>
+          <div class="pub-venue">Innovations in Computer Science and Engineering: 8th ICICSE, pp. 761–768. Springer Singapore, 2021.</div>
+        </div>
+      </div>
+
+      <div class="pub-item">
+        <div class="pub-num">14.</div>
+        <div>
+          <div class="pub-title">"A Comparative Selection of Best Activation Pair Layer in Convolution Neural Network for Sentence Classification using Deep Learning Model."</div>
+          <div class="pub-authors">Lutfun Nahar, Zinat Ara Zabu, Ahamed Raihan, Md Inzamamul Islam, <span class="me">Md Ismail Siddiqi Emon</span>.</div>
+          <div class="pub-venue">IEEE ICCES 2022, Coimbatore, India, pp. 1398–1404. doi: 10.1109/ICCES54183.2022.9835806</div>
+        </div>
+      </div>
+
+      <div class="pub-item">
+        <div class="pub-num">15.</div>
+        <div>
+          <div class="pub-title">"Hand Gesture Recognition System Utilizing Hidden Markov Model (HMM) for Computer Visions Applications."</div>
+          <div class="pub-authors">Sharmin Akter Milu, Tanmay Talukder, Md Inzamamul Islam, <span class="me">Md Ismail Siddiqi Emon</span>.</div>
+          <div class="pub-venue">Journal of Data Analysis and Information Processing (JDAIP), IF 1.52, SCIRP. (In press)</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="talks">
+      <h2>Invited Talks</h2>
+
+      <div class="pub-item">
+        <div class="pub-num">1.</div>
+        <div>
+          <div class="pub-title">"Multimodal Detection Framework of Lithium-Ion Battery Thermal Runaway."</div>
+          <div class="pub-authors"><span class="me">Md Ismail Siddiqi Emon</span>, Hongqiang Fang, Wai Cheong Tam.</div>
+          <div class="pub-venue">SFPE Fire Safety Conference &amp; Expo on Performance-Based Design 2026, The Westin, Singapore.</div>
+        </div>
+      </div>
+
+      <div class="pub-item">
+        <div class="pub-num">2.</div>
+        <div>
+          <div class="pub-title">"Early Stage Multimodal Thermal Runaway."</div>
+          <div class="pub-authors"><span class="me">Md Ismail Siddiqi Emon</span>, Hongqiang Fang, Md. Rahman, Wai Cheong Tam.</div>
+          <div class="pub-venue">NFPA Expo and Conference 2025, Mandalay Bay Convention Centre, Las Vegas, Nevada.</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="awards">
+      <h2>Scholarships &amp; Awards</h2>
+
+      <div class="list-item"><div class="list-name">Best Thesis Award, SCMNS, Morgan State University</div><div class="list-date">Fall 2024</div></div>
+      <div class="list-item"><div class="list-name">Graduate Student Award for Academic Excellence, Dept. of CS, Morgan State University</div><div class="list-date">Fall 2024</div></div>
+      <div class="list-item"><div class="list-name">UNC-EPIC Travel and Refreshment Grant, UNC-Chapel Hill</div><div class="list-date">Summer 2024</div></div>
+      <div class="list-item"><div class="list-name">Academic Trailblazer Award, Morgan State University</div><div class="list-date">Spring 2024</div></div>
+      <div class="list-item"><div class="list-name">AI/ML Health Equity Using Multimodal Biomedical/Biological Data Scholar, MSU</div><div class="list-date">Spring 2024</div></div>
+      <div class="list-item"><div class="list-name">Inst. Decosta Graduate Scholar, Morgan State University</div><div class="list-date">2023–2024</div></div>
+      <div class="list-item"><div class="list-name">NSF Funded Graduate Research Assistantship</div><div class="list-date">2023–2024</div></div>
+      <div class="list-item"><div class="list-name">CIML Room and Board Scholar, UC San Diego</div><div class="list-date">Summer 2023</div></div>
+    </section>
+
+    <section id="grants">
+      <h2>Travel Grants</h2>
+
+      <div class="list-item"><div class="list-name">SFPE Fire Safety Conference &amp; Expo 2026, Singapore</div><div class="list-date">$5,000</div></div>
+      <div class="list-item"><div class="list-name">NFPA Expo and Conference 2025, Las Vegas, NV</div><div class="list-date">$1,550</div></div>
+      <div class="list-item"><div class="list-name">UNC-EPIC Summer Camp, UNC-Chapel Hill (travel + refreshment)</div><div class="list-date">$550</div></div>
+      <div class="list-item"><div class="list-name">CIML Summer Institute, UC San Diego</div><div class="list-date">$700</div></div>
+      <div class="list-item"><div class="list-name">NsysS 2019, Dhaka, Bangladesh — full sponsorship, Feni University</div><div class="list-date">Full</div></div>
+      <div class="list-item"><div class="list-name">ICCES 2022, Coimbatore, India — registration &amp; publication, Feni University</div><div class="list-date">Full</div></div>
+    </section>
+
+    <section id="teaching">
+      <h2>Teaching</h2>
+
+      <div class="cv-item">
+        <div>
+          <div class="cv-title">Data Science and Artificial Intelligence (COSC 502)</div>
+          <div class="cv-detail">Instructor: Prof. Dr. Md Rahman · Morgan State University</div>
+        </div>
+        <div class="cv-date">Spring 2024</div>
+      </div>
+      <div class="cv-item">
+        <div>
+          <div class="cv-title">Introduction to Computer Science II (COSC 112)</div>
+          <div class="cv-detail">Taught Tkinter and Flask · Morgan State University</div>
+        </div>
+        <div class="cv-date">Spring 2024</div>
+      </div>
+      <div class="cv-item">
+        <div>
+          <div class="cv-title">Theory of Formal Languages, Grammars, and Automata (COSC 385)</div>
+          <div class="cv-detail">Instructor: Prof. Dr. Vojislav Stojkovic · Morgan State University</div>
+        </div>
+        <div class="cv-date">Spring 2023</div>
+      </div>
+
+      <p style="font-size:14px;color:var(--muted);margin-top:0.5rem;">
+        <strong style="color:var(--text);">Mentorship:</strong>
+        David Smith, Ben Jemaa Yassine (Dillard University, Summer 2024);
+        Landon Johnson, Malik Durant (Dillard University, Summer 2023).
+      </p>
+    </section>
+
+    <section id="skills">
+      <h2>Skills</h2>
+
+      <div class="skill-row"><div class="skill-cat">Programming</div><div class="skill-vals">Python, C/C++, Java, JavaScript, SQL, Unix Scripting, React, Node.js</div></div>
+      <div class="skill-row"><div class="skill-cat">ML / Deep Learning</div><div class="skill-vals">TensorFlow, PyTorch, OpenCV; CNNs, RNNs, VAEs, GANs, Transformers; SVM, KNN, Decision Trees, Bayes</div></div>
+      <div class="skill-row"><div class="skill-cat">Web Frameworks</div><div class="skill-vals">Flask, Jinja2, Bootstrap, Tailwind CSS, Material UI</div></div>
+      <div class="skill-row"><div class="skill-cat">Cloud / Platforms</div><div class="skill-vals">AWS, Azure, Google Cloud Platform</div></div>
+      <div class="skill-row"><div class="skill-cat">Tools</div><div class="skill-vals">GitHub, Git, LabView, Origin Lab, Excel</div></div>
+    </section>
+
+    <section id="referees">
+      <h2>Referees</h2>
+      <div class="ref-grid">
+        <div class="ref-item">
+          <div class="ref-name">Dr. Wai Cheong Tam</div>
+          <div class="ref-role">Mechanical Engineer (ZP4)<br>Fire Fighting Technology Group, Engineering Laboratory<br>National Institute of Standards and Technology</div>
+          <div class="ref-contact">
+            <a href="tel:3019758202">(301) 975-8202</a>
+            <a href="mailto:waicheong.tam@nist.gov">waicheong.tam@nist.gov</a>
+          </div>
+        </div>
+        <div class="ref-item">
+          <div class="ref-name">Dr. Fahmi Khalifa</div>
+          <div class="ref-role">Assistant Professor<br>Dept. of Electrical and Computer Engineering<br>Morgan State University, SEB Room 327</div>
+          <div class="ref-contact">
+            <a href="tel:4438852026">(443) 885-2026</a>
+            <a href="mailto:fahmi.khalifa@morgan.edu">fahmi.khalifa@morgan.edu</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer>Last updated April 2026 &nbsp;·&nbsp; Md. Ismail Siddiqi Emon</footer>
+
+  </main>
+</div>
+
+<script>
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('nav a');
+
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        navLinks.forEach(a => a.classList.remove('active'));
+        const active = document.querySelector(`nav a[href="#${entry.target.id}"]`);
+        if (active) active.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-20% 0px -70% 0px' });
+
+  sections.forEach(s => obs.observe(s));
+</script>
+</body>
+</html>
